@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.xtext.example.knapsack.feature_0.0.0.jar" id="org.eclipse.xtext.example.knapsack.feature" version="0.0.0">
+      <category name="operationsresearch"/>
+   </feature>
+   <category-def name="operationsresearch" label="Operations Research"/>
+</site>

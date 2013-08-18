@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.egit.core.GitProvider">
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,plugins/org.eclipse.xtext.example.knapsack"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,releng/org.eclipse.xtext.example.knapsack.config.parent"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,releng/org.eclipse.xtext.example.knapsack.distribution"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,features/org.eclipse.xtext.example.knapsack.feature"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,releng/org.eclipse.xtext.example.knapsack.parent"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,releng/org.eclipse.xtext.example.knapsack.repository"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,releng/org.eclipse.xtext.example.knapsack.repository.parent"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,releng/org.eclipse.xtext.example.knapsack.targetplatform"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,tests/org.eclipse.xtext.example.knapsack.tests"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,plugins/org.eclipse.xtext.example.knapsack.ui"/>
+<project reference="1.0,https://github.com/joergreichert/OperationsResearch.git,master,features/org.eclipse.xtext.example.knapsack.updatesite"/>
+</provider>
+</psf>

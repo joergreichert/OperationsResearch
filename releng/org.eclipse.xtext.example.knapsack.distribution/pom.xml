@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<parent>
+		<groupId>org.eclipse.xtext.example.knapsack</groupId>
+		<artifactId>org.eclipse.xtext.example.knapsack.config.parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../../releng/org.eclipse.xtext.example.knapsack.config.parent/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>org.eclipse.xtext.example.knapsack.distribution</artifactId>
+	<packaging>pom</packaging>
+	<name>Operations Research</name>
+	
+	<properties>
+		<distribution.dir>${basedir}/../../releng/org.eclipse.xtext.example.knapsack.parent/target/repository</distribution.dir>
+	</properties>
+	
+	<modules>
+		<module>../../releng/org.eclipse.xtext.example.knapsack.targetplatform</module>
+		<module>../../releng/org.eclipse.xtext.example.knapsack.repository.parent</module>
+	</modules>
+	
+	<profiles>
+		<profile>
+			<id>modules-default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../../releng/org.eclipse.xtext.example.knapsack.parent</module>
+				<module>../../plugins/org.eclipse.xtext.example.knapsack</module>
+				<module>../../plugins/org.eclipse.xtext.example.knapsack.ui</module>
+				<module>../../tests/org.eclipse.xtext.example.knapsack.tests</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>modules-targetplatform</id>
+			<activation>
+				<property>
+					<name>modules-targetplatform</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../../releng/org.eclipse.xtext.example.knapsack.repository</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>modules-assembly</id>
+			<activation>
+				<property>
+					<name>modules-assembly</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../../releng/org.eclipse.xtext.example.knapsack.parent</module>
+				<module>../../features/org.eclipse.xtext.example.knapsack.feature</module>
+				<module>../../features/org.eclipse.xtext.example.knapsack.updatesite</module>
+			</modules>
+		</profile>
+	</profiles>
+</project>

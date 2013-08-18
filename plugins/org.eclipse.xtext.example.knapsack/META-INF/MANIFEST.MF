@@ -19,16 +19,16 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.common.types
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.xtext.example,
- org.eclipse.xtext.example.calculation,
- org.eclipse.xtext.example.formatting,
- org.eclipse.xtext.example.knapsack,
- org.eclipse.xtext.example.knapsack.impl,
- org.eclipse.xtext.example.knapsack.util,
- org.eclipse.xtext.example.parser.antlr,
- org.eclipse.xtext.example.parser.antlr.internal,
- org.eclipse.xtext.example.scoping,
- org.eclipse.xtext.example.serializer,
- org.eclipse.xtext.example.services,
- org.eclipse.xtext.example.validation
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.eclipse.xtext.example.knapsack,
+ org.eclipse.xtext.example.knapsack.calculation,
+ org.eclipse.xtext.example.knapsack.formatting,
+ org.eclipse.xtext.example.knapsack.knapsack,
+ org.eclipse.xtext.example.knapsack.knapsack.impl,
+ org.eclipse.xtext.example.knapsack.knapsack.util,
+ org.eclipse.xtext.example.knapsack.parser.antlr,
+ org.eclipse.xtext.example.knapsack.parser.antlr.internal,
+ org.eclipse.xtext.example.knapsack.serializer,
+ org.eclipse.xtext.example.knapsack.services,
+ org.eclipse.xtext.example.knapsack.validation
+

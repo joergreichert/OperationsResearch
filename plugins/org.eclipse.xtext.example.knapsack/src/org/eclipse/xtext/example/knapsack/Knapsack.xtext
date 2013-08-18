@@ -1,0 +1,49 @@
+grammar org.eclipse.xtext.example.knapsack.Knapsack with org.eclipse.xtext.common.Terminals
+
+generate knapsack "http://www.eclipse.org/xtext/example/Knapsack"
+
+KnapsackProblem:
+	('algorithm:' algorithm=Algorithm)?
+	'capacity:' capacity=INT
+	('last' 'duration:' duration=STRING)?
+	'packed' '{'
+ 		(packedItem+=Item (',' packedItem+=Item)*)?
+	'}'
+	'unpacked' '{'
+ 		(unpackedItem+=Item (',' unpackedItem+=Item)*)?
+	'}'
+;
+
+enum Algorithm:
+	greedy='Greedy' | recursion='Recursion' | dp='DynamicProgramming' | complete='Complete'
+;
+	
+Item:
+	name=STRING '(' 
+		'weight' '=' weight=INT ',' 
+		'value' '=' value=INT
+	')'
+;
+
+/* Example: http://en.wikipedia.org/wiki/Karp's_21_NP-complete_problems
+ *  - http://en.wikipedia.org/wiki/Knapsack_problem
+ *  - http://www.programminglogic.com/knapsack-problem-dynamic-programming-algorithm/
+ * 
+ * A vase that weights 3 pounds and is worth 50 dollars.
+ * A silver nugget that weights 6 pounds and is worth 30 dollars.
+ * A painting that weights 4 pounds and is worth 40 dollars.
+ * A mirror that weights 5 pounds and is worth 10 dollars.
+ * 
+ * Restriction: Your bag can only take 10 pounds.
+ * Maximize the value.
+ * 
+ * items {
+ *    "vase" (weight=3, value=50),
+ *    "silver nugget" (weight=6, value=30),
+ *    "painting" (weight=4, value=40),
+ *    "mirror" (weight=5, value=10)
+ * }
+ * restriction: 10
+ * 
+ * -> expected: vase, painting
+ */

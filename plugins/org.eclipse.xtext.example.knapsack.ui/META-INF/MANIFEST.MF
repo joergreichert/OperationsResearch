@@ -18,9 +18,9 @@ Require-Bundle: org.eclipse.xtext.example.knapsack;visibility:=reexport,
  org.eclipse.compare
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.xtext.example.ui.quickfix,
- org.eclipse.xtext.example.ui.contentassist,
- org.eclipse.xtext.example.ui.contentassist.antlr,
- org.eclipse.xtext.example.ui.internal
-Bundle-Activator: org.eclipse.xtext.example.ui.internal.KnapsackActivator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.eclipse.xtext.example.knapsack.ui.quickfix,
+ org.eclipse.xtext.example.knapsack.ui.contentassist,
+ org.eclipse.xtext.example.knapsack.ui.contentassist.antlr,
+ org.eclipse.xtext.example.knapsack.ui.internal
+Bundle-Activator: org.eclipse.xtext.example.knapsack.ui.internal.KnapsackActivator

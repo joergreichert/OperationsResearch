@@ -14,6 +14,7 @@ import static extension com.google.common.collect.Sets.*
 import org.eclipse.xtext.validation.CheckType
 import org.eclipse.xtext.example.knapsack.knapsack.Item
 import java.util.List
+import static org.eclipse.xtext.example.knapsack.validation.IssueCodes.*
 
 class KnapsackValidator extends AbstractKnapsackValidator {
 	@Inject extension KnapsackCalculator
@@ -31,8 +32,8 @@ class KnapsackValidator extends AbstractKnapsackValidator {
 	    		val allItemsSize = allItems.size 
 				val newUnpackedItems = allItems
 				newUnpackedItems.removeAll(expected)
-				val expectedStr = expected.map[name].join(",")     	
-				val newUnpackedItemsStr = newUnpackedItems.map[name].join(",")
+				val expectedStr = expected.map[name].join(SEPERATOR)     	
+				val newUnpackedItemsStr = newUnpackedItems.map[name].join(SEPERATOR)
 				val lastDurationMessage = '''Last calculation applying algorithm «algorithm.name» on «allItemsSize» items took «end-start» ms.'''.toString     	
 	            warning(
 	            	"Current packaging is not the optimum", 

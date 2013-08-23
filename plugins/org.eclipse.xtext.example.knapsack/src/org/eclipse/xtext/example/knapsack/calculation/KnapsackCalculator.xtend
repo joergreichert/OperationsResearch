@@ -1,10 +1,16 @@
 package org.eclipse.xtext.example.knapsack.calculation
 
+import java.math.BigDecimal
+import java.math.BigInteger
 import java.text.DecimalFormat
 import java.util.List
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
+import java.util.concurrent.FutureTask
 import org.eclipse.xtext.example.knapsack.knapsack.Algorithm
 import org.eclipse.xtext.example.knapsack.knapsack.Item
 import org.eclipse.xtext.example.knapsack.knapsack.KnapsackProblem
+import org.eclipse.xtext.xbase.lib.IntegerRange
 import org.eclipse.xtext.xbase.lib.Pair
 
 import static org.eclipse.xtext.example.knapsack.knapsack.Algorithm.*
@@ -12,7 +18,7 @@ import static org.eclipse.xtext.example.knapsack.knapsack.Algorithm.*
 import static extension com.google.common.collect.Sets.*
 import static extension java.lang.Integer.*
 import static extension java.lang.Math.*
-import java.math.BigInteger
+import java.util.concurrent.Future
 
 class KnapsackCalculator {
 
@@ -31,8 +37,11 @@ class KnapsackCalculator {
     }
     
 	def private calculateOptimumByGreedyAlgorithm(Iterable<Item> it, int capacity) {
-		val sorted = toList.sortBy[-(value / weight)] // div result is int in IntegerExtensions?
-		val index = (0..size).map[it -> sorted.subList(0, it).map[weight].reduce[w1, w2 | w1 + w2]].filter[it.value != null && it.value <= capacity].last?.key
+		// div result is int in IntegerExtensions? -> Ok, as so defined in Java Spec
+		val sorted = toList.sortBy[-(value / weight)] 
+		val index = (0..size)
+						.map[it -> sorted.subList(0, it).map[weight].reduce[w1, w2 | w1 + w2]]
+						.filter[it.value != null && it.value <= capacity].last?.key
 		if(index != null && index > 0) sorted.subList(0, index) else #[]
 	}    
     
@@ -41,7 +50,8 @@ class KnapsackCalculator {
 		items.toList.calculateOptimumByRecursion(capacity, 0, selectedItems).value
 	}
 	
-	def private Pair<Integer, ? extends List<Item>> calculateOptimumByRecursion(List<Item> it, int capacity, int index, List<Item> selectedItems) {
+	def private Pair<Integer, ? extends List<Item>> calculateOptimumByRecursion(
+			List<Item> it, int capacity, int index, List<Item> selectedItems) {
 		if(index < size) {
     		val a = calculateOptimumByRecursion(capacity, index + 1, selectedItems);
 	    	val item = get(index)
@@ -68,28 +78,25 @@ class KnapsackCalculator {
     def calculateOptimumByComplete(Iterable<Item> it, int capacity) {
     	val list = toList
     	val combinations = if(size == 0) 0 else (2 ** size).intValue - 1
-    	val extension formatter = new DecimalFormat((1..size).map["0"].join)
     	//val extension (String) => int toInt = [Integer.valueOf(it)] // is not available
-    	//val processes = combinations / 100
-		(0..combinations)
-			.map[toBinaryString.toInt.format.toCharArray] // DecimalFormat.format, but hover and linking shows Format.format
-			.map[getItems(list, capacity)].filter[size > 0]
-			.map[it -> map[value].reduce[v1, v2|v1 + v2]] // reduce[+]
-			.sortBy[-value].map[key].head
-    } 
-    
-    def private getItems(char[] binaryList, Iterable<Item> itemList, int capacity) {
-    	val items = (0..binaryList.size-1).map[getItemForBinaryPosition(binaryList, itemList)].filter[it != null]
-    	val sum = items.map[weight].reduce[w1, w2|w1 + w2] 	
-    	if(sum != null && sum <= capacity) items else #[]
+    	val range = sqrt(combinations).intValue
+    	val processRanges = (0..(combinations / range).intValue)
+    							.map[new IntegerRange(range * it, maxRange(range, combinations))]
+		processRanges.map[
+			new CompleteCalculationTask(start, end, list, capacity)
+				.parallelize(<Pair<Iterable<Item>, Integer>>newArrayList)
+		].map[get].flatten.sortBy[-value].map[key].head
     }
     
-    def private getItemForBinaryPosition(int index, char[] binaryList, Iterable<Item> itemList) {
-    	val value = binaryList.get(index).toString
-    	switch(value) { case "1": itemList.get(index)  default: null  }
+    def maxRange(int index, int range, int combinations) {
+    	var maxRange = (range * index) + range; 
+    	if(maxRange < combinations) maxRange else combinations; 
     }
     
-    def private toInt(String s) { new BigInteger(s)  }
+    def private <T> Future<T> parallelize(Callable<T> callable, T result) {
+    	val extension executorService = Executors.newCachedThreadPool();
+    	new FutureTask(callable).submit(result)
+    }
 	
     def private operator_and(Iterable<Item> items1, Iterable<Item> items2) {
     	(items1.nullSafeSet.union(items2.nullSafeSet))
@@ -101,5 +108,35 @@ class KnapsackCalculator {
     
     def private operator_power(int base, int exponent) {  base.pow(exponent)  }
     
-    def private double operator_divide(int a, int b) {  return Double.valueOf(a) / Double.valueOf(b) }
+    def private BigDecimal operator_divide(int a, int b) {  return BigDecimal.valueOf(a) / BigDecimal.valueOf(b) }
+}
+
+@Data
+class CompleteCalculationTask implements Callable<Iterable<Pair<Iterable<Item>, Integer>>> {
+	
+	int start
+	int end
+	List<Item> list 
+	int capacity
+
+	override call() throws Exception {
+    	val extension formatter = new DecimalFormat((1..list.size).map["0"].join)
+		(start..end)
+			.map[toBinaryString.toInt.format.toCharArray] // DecimalFormat.format, but hover and linking shows Format.format
+			.map[getItems(list, capacity)].filter[size > 0]
+			.map[it -> map[value].reduce[v1, v2|v1 + v2]] // reduce[+]
+	}
+
+    def private toInt(String s) { new BigInteger(s)  }
+
+    def private getItems(char[] binaryList, Iterable<Item> itemList, int capacity) {
+    	val items = (0..binaryList.size-1).map[getItemForBinaryPosition(binaryList, itemList)].filter[it != null]
+    	val sum = items.map[weight].reduce[w1, w2|w1 + w2] 	
+    	if(sum != null && sum <= capacity) items else #[]
+    }
+
+    def private getItemForBinaryPosition(int index, char[] binaryList, Iterable<Item> itemList) {
+    	val value = binaryList.get(index).toString
+    	switch(value) { case "1": itemList.get(index)  default: null  }
+    }
 }

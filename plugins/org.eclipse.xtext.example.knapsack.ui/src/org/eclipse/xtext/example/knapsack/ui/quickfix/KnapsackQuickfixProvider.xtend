@@ -3,22 +3,23 @@
 */
 package org.eclipse.xtext.example.knapsack.ui.quickfix
 
+import org.eclipse.core.internal.resources.Workspace
+import org.eclipse.core.resources.IMarker
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Path
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.example.knapsack.knapsack.KnapsackProblem
+import org.eclipse.xtext.example.knapsack.ui.internal.KnapsackActivator
 import org.eclipse.xtext.example.knapsack.validation.IssueCodes
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
 import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
 import org.eclipse.xtext.validation.Issue
+import static org.eclipse.xtext.example.knapsack.validation.IssueCodes.*
 
 import static extension com.google.common.collect.Sets.*
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.emf.common.util.URI
-import org.eclipse.core.runtime.Path
-import org.eclipse.core.internal.resources.Workspace
-import org.eclipse.core.resources.IMarker
-import org.eclipse.xtext.example.knapsack.ui.internal.KnapsackActivator
-import org.eclipse.core.resources.IResource
 
 /**
  * Custom quickfixes.
@@ -33,16 +34,13 @@ class KnapsackQuickfixProvider extends DefaultQuickfixProvider {
 			switch (element) {
 				KnapsackProblem: {
 					val allItems = element.packedItem.toSet.union(element.unpackedItem.toSet).toList
-					val newPackedItemNames = issue.data.get(0).split(",")
-					val newUnpackedItemNames = issue.data.get(1).split(",")
-					val lastDurationMessage = issue.data.get(2)
+					val newPackedItemNames = issue.data.get(0).split(SEPERATOR)
+					val newUnpackedItemNames = issue.data.get(1).split(SEPERATOR)
 					val newPackedItems = allItems.filter[newPackedItemNames.contains(name)]
 					val newUnpackedItems = allItems.filter[newUnpackedItemNames.contains(name)]
-					element.packedItem.clear
-					element.packedItem.addAll(newPackedItems.sortBy[name])
-					element.unpackedItem.clear
-					element.unpackedItem.addAll(newUnpackedItems.sortBy[name])
-					element.duration = lastDurationMessage
+					element.packedItem => [ clear; it += newPackedItems.sortBy[name] ]
+					element.unpackedItem => [ clear; it += newUnpackedItems.sortBy[name] ]
+					element.duration = issue.data.get(2)
 					removeMarker(element, issue)
 				}
 			}

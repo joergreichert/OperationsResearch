@@ -31,10 +31,11 @@ Workflow {
     	pathTestProject = "${testProject}"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
+		encoding = "UTF-8"
 		language = auto-inject {
 			uri = grammarURI
 			fragment = grammarAccess.GrammarAccessFragment auto-inject {}
-			fragment = ecore.EcoreGeneratorFragment auto-inject {}
+			fragment = ecore.EMFGeneratorFragment auto-inject {}
 			fragment = serializer.SerializerFragment auto-inject {  generateStub = false  }
 			fragment = resourceFactory.ResourceFactoryFragment auto-inject {}
 			fragment = parser.antlr.XtextAntlrGeneratorFragment auto-inject {}

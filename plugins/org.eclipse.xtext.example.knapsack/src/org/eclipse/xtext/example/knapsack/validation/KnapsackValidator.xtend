@@ -34,7 +34,7 @@ class KnapsackValidator extends AbstractKnapsackValidator {
 				newUnpackedItems.removeAll(expected)
 				val expectedStr = expected.map[name].join(SEPERATOR)     	
 				val newUnpackedItemsStr = newUnpackedItems.map[name].join(SEPERATOR)
-				val lastDurationMessage = '''Last calculation applying algorithm «algorithm.name» on «allItemsSize» items took «end-start» ms.'''.toString     	
+				val lastDurationMessage = '''Last calculation applying algorithm Â«algorithm.nameÂ» on Â«allItemsSizeÂ» items took Â«end-startÂ» ms.'''.toString     	
 	            warning(
 	            	"Current packaging is not the optimum", 
 	            	KnapsackPackage$Literals::KNAPSACK_PROBLEM__CAPACITY,

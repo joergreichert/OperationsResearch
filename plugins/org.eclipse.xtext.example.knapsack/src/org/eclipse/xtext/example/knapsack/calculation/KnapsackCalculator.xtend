@@ -5,8 +5,9 @@ import java.math.BigInteger
 import java.text.DecimalFormat
 import java.util.List
 import java.util.concurrent.Callable
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.concurrent.FutureTask
+import java.util.concurrent.Future
 import org.eclipse.xtext.example.knapsack.knapsack.Algorithm
 import org.eclipse.xtext.example.knapsack.knapsack.Item
 import org.eclipse.xtext.example.knapsack.knapsack.KnapsackProblem
@@ -18,7 +19,6 @@ import static org.eclipse.xtext.example.knapsack.knapsack.Algorithm.*
 import static extension com.google.common.collect.Sets.*
 import static extension java.lang.Integer.*
 import static extension java.lang.Math.*
-import java.util.concurrent.Future
 
 class KnapsackCalculator {
 
@@ -82,10 +82,11 @@ class KnapsackCalculator {
     	val range = sqrt(combinations).intValue
     	val processRanges = (0..(combinations / range).intValue)
     							.map[new IntegerRange(range * it, maxRange(range, combinations))]
-		processRanges.map[
-			new CompleteCalculationTask(start, end, list, capacity)
-				.parallelize(<Pair<Iterable<Item>, Integer>>newArrayList)
-		].map[get].flatten.sortBy[-value].map[key].head
+    	val executorService = Executors.newCachedThreadPool
+		processRanges
+			.map[new CompleteCalculationTask(start, end, list, capacity)]
+			.parallelize(executorService).map[get]
+			.flatten.sortBy[-value].map[key].head
     }
     
     def maxRange(int index, int range, int combinations) {
@@ -93,9 +94,8 @@ class KnapsackCalculator {
     	if(maxRange < combinations) maxRange else combinations; 
     }
     
-    def private <T> Future<T> parallelize(Callable<T> callable, T result) {
-    	val extension executorService = Executors.newCachedThreadPool();
-    	new FutureTask(callable).submit(result)
+    def private <T> List<Future<T>> parallelize(Iterable<? extends Callable<T>> callables, extension ExecutorService executorService) {
+    	callables.toList.invokeAll
     }
 	
     def private operator_and(Iterable<Item> items1, Iterable<Item> items2) {
@@ -122,7 +122,7 @@ class CompleteCalculationTask implements Callable<Iterable<Pair<Iterable<Item>, 
 	override call() throws Exception {
     	val extension formatter = new DecimalFormat((1..list.size).map["0"].join)
 		(start..end)
-			.map[toBinaryString.toInt.format.toCharArray] // DecimalFormat.format, but hover and linking shows Format.format
+			.map[toBinaryString.toInt.format.toCharArray]
 			.map[getItems(list, capacity)].filter[size > 0]
 			.map[it -> map[value].reduce[v1, v2|v1 + v2]] // reduce[+]
 	}

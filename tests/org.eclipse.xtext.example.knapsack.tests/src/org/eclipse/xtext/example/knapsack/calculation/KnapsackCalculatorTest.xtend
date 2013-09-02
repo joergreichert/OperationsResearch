@@ -20,7 +20,7 @@ class KnapsackCalculatorTest {
 	@Inject extension KnapsackCalculator
 	
 	def private testDSL(String algorithm) '''
-		algorithm: «algorithm»
+		algorithm: Â«algorithmÂ»
 		capacity: 30
 		packed {
 		}
@@ -43,11 +43,11 @@ class KnapsackCalculatorTest {
 		val model = testDSL(algorithmAccess.greedyGreedyKeyword_0_0.value).parse	
 		val result = model.calculateOptimum
 		assertEquals("expected item count", 3, result.size)
-		assertEquals("expected first item name", "item 01", result.get(0).name)
+		assertEquals("expected first item name", "item 04", result.get(0).name)
 		assertEquals("expected second item name", "item 02", result.get(1).name)
-		assertEquals("expected third item name", "item 04", result.get(2).name)
+		assertEquals("expected third item name", "item 10", result.get(2).name)
 		assertEquals("weight", 25, result.map[weight].reduce[w1, w2 | w1 + w2].intValue)
-		assertEquals("value", 34, result.map[value].reduce[v1, v2 | v1 + v2].intValue)
+		assertEquals("value", 37, result.map[value].reduce[v1, v2 | v1 + v2].intValue)
 	}	
 	
 	@Test
@@ -66,6 +66,7 @@ class KnapsackCalculatorTest {
 	def void testComplete() {
 		val model = testDSL(algorithmAccess.completeCompleteKeyword_3_0.value).parse	
 		val result = model.calculateOptimum
+		assertNotNull("result shouldn't be null", result)
 		assertEquals("expected item count", 3, result.size)
 		assertEquals("expected first item name", "item 04", result.get(0).name)
 		assertEquals("expected second item name", "item 09", result.get(1).name)

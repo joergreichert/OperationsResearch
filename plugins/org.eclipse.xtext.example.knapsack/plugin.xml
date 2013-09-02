@@ -7,10 +7,7 @@
     <package 
        uri = "http://www.eclipse.org/xtext/example/Knapsack" 
        class = "org.eclipse.xtext.example.knapsack.knapsack.KnapsackPackage"
-       genModel = "org/eclipse/xtext/example/Knapsack.genmodel" /> 
-	
+       genModel = "model/generated/Knapsack.genmodel" /> 
   </extension>
-
-
 
 </plugin>

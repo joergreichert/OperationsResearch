@@ -37,7 +37,6 @@ class KnapsackCalculator {
     }
     
 	def private calculateOptimumByGreedyAlgorithm(Iterable<Item> it, int capacity) {
-		// div result is int in IntegerExtensions? -> Ok, as so defined in Java Spec
 		val sorted = toList.sortBy[-(value / weight)] 
 		val index = (0..size)
 						.map[it -> sorted.subList(0, it).map[weight].reduce[w1, w2 | w1 + w2]]
@@ -46,29 +45,24 @@ class KnapsackCalculator {
 	}    
     
 	def private calculateOptimumByRecursion(Iterable<Item> items, int capacity) {
-		val selectedItems = <Item>newArrayList
-		items.toList.calculateOptimumByRecursion(capacity, 0, selectedItems).value
+		items.toList.calculateOptimumByRecursion(capacity, 0).value
 	}
 	
 	def private Pair<Integer, ? extends List<Item>> calculateOptimumByRecursion(
-			List<Item> it, int capacity, int index, List<Item> selectedItems) {
+			List<Item> it, int capacity, int index) {
 		if(index < size) {
-    		val a = calculateOptimumByRecursion(capacity, index + 1, selectedItems);
+    		val a = calculateOptimumByRecursion(capacity, index + 1);
 	    	val item = get(index)
 	    	var b = 
 	    		if(capacity - item.weight >= 0) {
-	    			val result = calculateOptimumByRecursion(capacity - item.weight, index + 1, selectedItems)
+	    			val result = calculateOptimumByRecursion(capacity - item.weight, index + 1)
 					val newSelectedItems = <Item>newArrayList
 	    			result.value.forEach[newSelectedItems += it]
 	    			newSelectedItems += item
 	      			item.value + result.key -> newSelectedItems
-	    		} else 0 -> selectedItems
-	    	if(a.key > b.key) {
-	    		return a
-	    	} else {
-	    		return b
-    		}
-  		} else 0 -> selectedItems
+	    		} else 0 -> <Item>newArrayList
+	    	if(a.key > b.key) a else b
+  		} else 0 -> <Item>newArrayList
 	}
 	
 	def private calculateOptimumByDynamicProgramming(Iterable<Item> it, int capacity) {
@@ -78,7 +72,6 @@ class KnapsackCalculator {
     def calculateOptimumByComplete(Iterable<Item> it, int capacity) {
     	val list = toList
     	val combinations = if(size == 0) 0 else (2 ** size).intValue - 1
-    	//val extension (String) => int toInt = [Integer.valueOf(it)] // is not available
     	val range = sqrt(combinations).intValue
     	val processRanges = (0..(combinations / range).intValue)
     							.map[new IntegerRange(range * it, maxRange(range, combinations))]
@@ -90,7 +83,7 @@ class KnapsackCalculator {
     }
     
     def maxRange(int index, int range, int combinations) {
-    	var maxRange = (range * index) + range; 
+    	val maxRange = (range * index) + range; 
     	if(maxRange < combinations) maxRange else combinations; 
     }
     
@@ -114,17 +107,18 @@ class KnapsackCalculator {
 @Data
 class CompleteCalculationTask implements Callable<Iterable<Pair<Iterable<Item>, Integer>>> {
 	
-	int start
-	int end
-	List<Item> list 
-	int capacity
+	private int start
+	private int end
+	private List<Item> list 
+	private int capacity
 
 	override call() throws Exception {
     	val extension formatter = new DecimalFormat((1..list.size).map["0"].join)
 		(start..end)
+	    	//val extension (String) => int toInt = [new BigInteger(it)] // is not available, as call is toInt.apply(s)
 			.map[toBinaryString.toInt.format.toCharArray]
 			.map[getItems(list, capacity)].filter[size > 0]
-			.map[it -> map[value].reduce[v1, v2|v1 + v2]] // reduce[+]
+			.map[it -> map[value].reduce[v1, v2|v1 + v2]]
 	}
 
     def private toInt(String s) { new BigInteger(s)  }

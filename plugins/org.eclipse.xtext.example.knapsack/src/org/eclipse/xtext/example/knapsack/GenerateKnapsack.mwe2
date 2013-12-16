@@ -4,16 +4,17 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/org/eclipse/xtext/example/knapsack/Knapsack.xtext"
 var fileExtensions = "knapsack"
 var projectName = "org.eclipse.xtext.example.knapsack"
-var runtimeProject = "../${projectName}"
+var grammarURI = "platform:/resource/${projectName}/src/org/eclipse/xtext/example/knapsack/Knapsack.xtext"
+var runtimeProject = "../../plugins/${projectName}"
 var testProject = "../../tests/${projectName}.tests"
 var generateXtendStub = true
+var encoding = "UTF-8"
 
 Workflow {
 	bean = StandaloneSetup {
-		scanClassPath = true
+    	resourceSet = org.eclipse.xtext.resource.XtextResourceSet:theResourceSet {}
 		platformUri = "${runtimeProject}/.."
 	}
 
@@ -27,11 +28,12 @@ Workflow {
     	pathTestProject = "${testProject}"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
-		encoding = "UTF-8"
+		encoding = encoding
 		language = auto-inject {
+    		forcedResourceSet = theResourceSet
 			uri = grammarURI
 			fragment = grammarAccess.GrammarAccessFragment auto-inject {}
-			fragment = ecore.EMFGeneratorFragment auto-inject {}
+			fragment = ecore.EMFGeneratorFragment auto-inject {  javaModelDirectory = "../${projectName}/src-gen"  }
 			fragment = serializer.SerializerFragment auto-inject {  generateStub = false  }
 			fragment = resourceFactory.ResourceFactoryFragment auto-inject {}
 			fragment = parser.antlr.XtextAntlrGeneratorFragment auto-inject {}

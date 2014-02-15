@@ -1,17 +1,17 @@
-TargetDefinition "Operations Research - Eclipse 4.3, Xtext/Xtend 2.4.2"
+TargetDefinition "Operations Research - Eclipse 4.3, Xtext/Xtend 2.5.2"
 	targetFile = org.eclipse.xtext.example.knapsack.targetplatform
 
 	"Kepler" http://download.eclipse.org/releases/kepler {
-		org.eclipse.sdk 4.3.0.v20130605-2000,
-		org.eclipse.pde 3.9.0.v20130605-2000
+		org.eclipse.sdk 4.3.1.v20130911-1000,
+		org.eclipse.pde 3.9.1.v20130911-1000
 	}
 
 	"Xtext & Xtend" http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/ {
-		org.eclipse.emf.sdk 2.9.1.v20130902-0605,
-		org.eclipse.xtext.sdk 2.5.0.v201312110906,
-		org.eclipse.xtend.sdk 2.5.0.v201312110906,
-		org.eclipse.emf.mwe2.language.sdk 2.5.0.v201312110944,
-		org.eclipse.emf.mwe2.runtime.sdk 2.5.0.v201312110307
+		org.eclipse.emf.sdk 2.9.2.v20140203-1126,
+		org.eclipse.xtext.sdk 2.5.2.v201402120812,
+		org.eclipse.xtend.sdk 2.5.2.v201402120812,
+		org.eclipse.emf.mwe2.language.sdk 2.5.1.v201402030750,
+		org.eclipse.emf.mwe2.runtime.sdk 2.5.1.v201402030544
 	}
 
 	"Xtext ANTLR" http://download.itemis.com/updates/releases/2.1.0/ {
@@ -20,5 +20,5 @@ TargetDefinition "Operations Research - Eclipse 4.3, Xtext/Xtend 2.4.2"
 	}
 	
 	"XPECT" http://www.xpect-tests.org/updatesite/nightly/ {
-		org.xpect.sdk 0.1.0.201311301514
+		org.xpect.sdk 0.1.0.201401101421
 	}

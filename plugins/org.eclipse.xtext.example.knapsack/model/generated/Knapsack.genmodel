@@ -4,7 +4,7 @@
     editorDirectory="/../plugins/org.eclipse.xtext.example.knapsack.editor/src" modelPluginID="org.eclipse.xtext.example.knapsack"
     forceOverwrite="true" modelName="Knapsack" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.xtext.example.knapsack.edit"
-    editorPluginID="org.eclipse.xtext.example.knapsack.edit" runtimeVersion="2.9">
+    editorPluginID="org.eclipse.xtext.example.knapsack.edit" runtimeVersion="2.10">
   <genPackages prefix="Knapsack" basePackage="org.eclipse.xtext.example.knapsack"
       disposableProviderFactory="true" fileExtensions="knapsack" ecorePackage="Knapsack.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Knapsack.ecore#//Algorithm">

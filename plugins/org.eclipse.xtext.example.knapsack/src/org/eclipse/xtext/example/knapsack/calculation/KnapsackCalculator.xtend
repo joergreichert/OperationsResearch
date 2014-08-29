@@ -8,13 +8,10 @@ import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
+import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.example.knapsack.knapsack.Algorithm
 import org.eclipse.xtext.example.knapsack.knapsack.Item
 import org.eclipse.xtext.example.knapsack.knapsack.KnapsackProblem
-import org.eclipse.xtext.xbase.lib.IntegerRange
-import org.eclipse.xtext.xbase.lib.Pair
-
-import static org.eclipse.xtext.example.knapsack.knapsack.Algorithm.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension java.lang.Integer.*

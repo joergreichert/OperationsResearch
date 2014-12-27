@@ -29,8 +29,8 @@
     </setupTask>
     <setupTask
         xsi:type="setup:EclipseIniTask"
-        option="-Doomph.redirection.repository.target.generator.setup"
-        value="=https://raw.githubusercontent.com/joergreichert/RepositoryTargetGenerator/${scope.project.stream.name}/releng/de.abg.jreichert.repositorytarget.config.parent/oomph.setup->${git.clone.knapsack.location|uri}/releng/de.abg.jreichert.repositorytarget.config.parent/oomph.setup"
+        option="-Doomph.redirection.operations.research.setup"
+        value="=https://raw.githubusercontent.com/joergreichert/OperationsResearch/${scope.project.stream.name}/releng/org.eclipse.xtext.example.knapsack.config.parent/oomph.setup->${git.clone.knapsack.location|uri}/releng/org.eclipse.xtext.example.knapsack.config.parent/oomph.setup"
         vm="true">
       <description>redirect changes to Oomph configuration triggered within the Eclipse instance to the setup file within the locally cloned repository, so it can be checked in</description>
     </setupTask>

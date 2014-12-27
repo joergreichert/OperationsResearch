@@ -18,19 +18,6 @@
     name="operations.research"
     label="Operations Research">
   <setupTask
-      xsi:type="setup.workingsets:WorkingSetTask">
-    <workingSet
-        name="${scope.project.name}">
-      <predicate
-          xsi:type="predicates:AndPredicate">
-        <operand
-            xsi:type="predicates:RepositoryPredicate"
-            project="org.eclipse.xtext.example.knapsack-feature"/>
-      </predicate>
-    </workingSet>
-    <description>The dynamic working sets for ${scope.project.label}</description>
-  </setupTask>
-  <setupTask
       xsi:type="setup:CompoundTask"
       name="Start configuration">
     <setupTask
@@ -1774,7 +1761,7 @@
   </setupTask>
   <stream name="master"/>
   <logicalProjectContainer
-      xsi:type="setup:ProjectCatalog"
-      href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>
+      xsi:type="setup:Project"
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']/@projects[name='GitHubContainer']"/>
   <description>Exercise operations research algorithms with Xtext and Xtend.</description>
 </setup:Project>

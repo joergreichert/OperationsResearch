@@ -71,8 +71,8 @@
           name="org.eclipse.sdk"/>
       <requirement
           name="org.eclipse.e4.rcp.R441patch.feature.group"/>
-	  <repository
-		  url="http://download.eclipse.org/releases/luna"/>
+      <repository
+          url="http://download.eclipse.org/releases/luna"/>
       <repository
           url="http://download.eclipse.org/eclipse/updates/4.4"/>
       <description>Eclipse Core</description>
@@ -85,21 +85,17 @@
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="2.7.3"/>
+          name="org.eclipse.xtext.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.xtend.sdk.feature.group"
-          versionRange="2.7.3"/>
+          name="org.eclipse.xtend.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.emf.mwe2.language.sdk.feature.group"
-          versionRange="2.7.0"/>
+          name="org.eclipse.emf.mwe2.language.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"
-          versionRange="2.7.0"/>
+          name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"/>
       <repository
-          url="http://download.eclipse.org/modeling/emf/emf/updates/releases/"/>
+          url="${emf.p2.uri}"/>
       <repository
-          url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+          url="${xtext.p2.url}"/>
       <description>Xtext &amp; Xtend</description>
     </setupTask>
     <setupTask
@@ -1646,11 +1642,9 @@
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.7.3,2.8.0)"/>
+          name="org.eclipse.xtext.sdk.feature.group"/>
       <requirement
-          name="org.eclipse.xtend.sdk.feature.group"
-          versionRange="[2.7.3,2.8.0)"/>
+          name="org.eclipse.xtend.sdk.feature.group"/>
       <requirement
           name="org.xpect.sdk.feature.group"/>
       <requirement
@@ -1660,14 +1654,14 @@
           locateNestedProjects="true"/>
       <repositoryList
           name="Mars">
-	    <repository
-		    url="http://download.eclipse.org/releases/mars"/>
+        <repository
+            url="http://download.eclipse.org/releases/mars"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/4.5milestones"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/releases/"/>
+            url="${emf.p2.uri}"/>
         <repository
-            url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+            url="${xtext.p2.url}"/>
         <repository
             url="http://download.itemis.com/updates/releases/2.1.1/"/>
         <repository
@@ -1675,14 +1669,14 @@
       </repositoryList>
       <repositoryList
           name="Luna">
-	    <repository
-		    url="http://download.eclipse.org/releases/luna"/>
+        <repository
+            url="http://download.eclipse.org/releases/luna"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/4.4"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/releases/"/>
+            url="${emf.p2.uri}"/>
         <repository
-            url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+            url="${xtext.p2.url}"/>
         <repository
             url="http://download.itemis.com/updates/releases/2.1.1/"/>
         <repository
@@ -1690,14 +1684,14 @@
       </repositoryList>
       <repositoryList
           name="Kepler">
-	    <repository
-		    url="http://download.eclipse.org/releases/kepler"/>
+        <repository
+            url="http://download.eclipse.org/releases/kepler"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/4.3"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/releases/"/>
+            url="${emf.p2.uri}"/>
         <repository
-            url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+            url="${xtext.p2.url}"/>
         <repository
             url="http://download.itemis.com/updates/releases/2.1.1/"/>
         <repository
@@ -1705,14 +1699,14 @@
       </repositoryList>
       <repositoryList
           name="Juno">
-	    <repository
-		    url="http://download.eclipse.org/releases/juno"/>
+        <repository
+            url="http://download.eclipse.org/releases/juno"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/4.2"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/releases/"/>
+            url="${emf.p2.uri}"/>
         <repository
-            url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+            url="${xtext.p2.url}"/>
         <repository
             url="http://download.itemis.com/updates/releases/2.1.1/"/>
         <repository
@@ -1763,7 +1757,30 @@
       </query>
     </setupTask>
   </setupTask>
-  <stream name="master"/>
+  <stream name="master">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        type="URI"
+        name="emf.p2.uri"
+        value="http://download.eclipse.org/modeling/emf/emf/updates/releases/"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        type="URI"
+        name="xtext.p2.url"
+        value="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+  </stream>
+  <stream name="xtext28">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        type="URI"
+        name="emf.p2.uri"
+        value="http://download.eclipse.org/modeling/emf/emf/updates/interim/"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        type="URI"
+        name="xtext.p2.url"
+        value="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/latest/"/>
+  </stream>
   <logicalProjectContainer
       xsi:type="setup:Project"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']/@projects[name='GitHubContainer']"/>

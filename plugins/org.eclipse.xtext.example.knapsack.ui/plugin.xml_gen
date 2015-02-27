@@ -327,5 +327,11 @@
             extensions="knapsack">
     </provider>
   </extension>
+  <extension point="org.eclipse.team.core.fileTypes">
+    <fileTypes
+            extension="knapsack"
+            type="text">
+    </fileTypes>
+  </extension>
 
 </plugin>

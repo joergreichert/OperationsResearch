@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.xtext.example.knapsack/src-gen" editDirectory="/../plugins/org.eclipse.xtext.example.knapsack.edit/src"
     editorDirectory="/../plugins/org.eclipse.xtext.example.knapsack.editor/src" modelPluginID="org.eclipse.xtext.example.knapsack"
     forceOverwrite="true" modelName="Knapsack" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.xtext.example.knapsack.edit"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.eclipse.xtext.example.knapsack.edit"
     editorPluginID="org.eclipse.xtext.example.knapsack.edit" runtimeVersion="2.10">
   <genPackages prefix="Knapsack" basePackage="org.eclipse.xtext.example.knapsack"
       disposableProviderFactory="true" fileExtensions="knapsack" ecorePackage="Knapsack.ecore#/">
